@@ -8,6 +8,7 @@ var JUEGOS = [
   { id: 'flappy-liam', nombre: 'Flappy Bird de LIAM', emoji: '🐤', cat: 'De LIAM', c1: '#38bdf8', c2: '#facc15', tam: 2, tipo: 'enlace', url: 'https://muse.ai/s/flappy-bird-xzm6xa4bxdxaxyxexd/Wis1JqgcXFZ0HWouzoWVwlEz3-6myiTlp2xYbUQODMM', desc: 'El Flappy de LIAM con tienda de skins y MODO ANGRY. Se abre en otra pestaña.' },
   { id: '2048', nombre: '2048', emoji: '🔢', cat: 'Ingenio', c1: '#f59e0b', c2: '#b45309', tam: 1, tipo: 'canvas', desc: 'Junta fichas iguales hasta llegar a 2048.' },
   { id: 'bloques', nombre: 'Bloques', emoji: '🧱', cat: 'Clásicos', c1: '#6366f1', c2: '#312e81', tam: 2, tipo: 'canvas', desc: 'Acomoda las piezas que caen y completa líneas.' },
+  { id: 'armas', nombre: 'Armas vs Robots', emoji: '🔫', cat: 'Acción', c1: '#ef4444', c2: '#1f2937', tam: 2, tipo: 'canvas', desc: 'Dispara a los robots con pistola, escopeta y metralleta.' },
   { id: 'invasores', nombre: 'Invasores', emoji: '👾', cat: 'Acción', c1: '#a855f7', c2: '#1e1b4b', tam: 2, tipo: 'canvas', desc: 'Defiende la Tierra de oleadas de invasores.' },
   { id: 'ladrillos', nombre: 'Rompe Ladrillos', emoji: '🏓', cat: 'Clásicos', c1: '#f97316', c2: '#9a3412', tam: 1, tipo: 'canvas', desc: 'Rebota la pelota y rompe todos los ladrillos.' },
   { id: 'pajaro', nombre: 'Pajarito Volador', emoji: '🐦', cat: 'Habilidad', c1: '#7dd3fc', c2: '#0284c7', tam: 1, tipo: 'canvas', desc: 'Aletea y pasa entre los tubos.' },
