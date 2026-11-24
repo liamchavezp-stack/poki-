@@ -2,6 +2,7 @@
 setSize(560, 420);
 help('Muévete con WASD o las flechas. Apunta con el mouse y haz clic para disparar, o mantén Espacio (●) para disparar al robot más cercano. Cambia de arma con 1, 2, 3 o Q. La Escopeta se desbloquea con 100 puntos y la Metralleta con 250.');
 pad(['left', 'up', 'down', 'right', 'go', 'q'], { q: 'Arma' });
+const SP = window.SPRITES; // sprites de LIAM: soldado de pie (al moverse) y agachado (quieto)
 const WP = [
   { n: 'Pistola', cd: 0.35, b: 1, sp: 0, need: 0, c: '#fde047' },
   { n: 'Escopeta', cd: 0.7, b: 5, sp: 0.5, need: 100, c: '#fb923c' },
@@ -65,8 +66,15 @@ loop(dt => {
     rect(e.x - e.r * 0.5, e.y + e.r * 0.3, e.r, 3, '#111');
   });
   bs.forEach(b => circ(b.x, b.y, 3, b.c));
-  ctx.strokeStyle = WP[w].c; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + Math.cos(ang) * 22, p.y + Math.sin(ang) * 22); ctx.stroke();
-  circ(p.x, p.y, 12, '#38bdf8'); circ(p.x, p.y, 6, '#e0f2fe');
+  // soldado girado hacia donde apunta (el sprite mira a la derecha; al apuntar a la izquierda se voltea para no quedar de cabeza)
+  const mv = dx || dy, izq = Math.cos(ang) < 0;
+  if (SP && SP.listo(mv ? 'soldado' : 'agachado')) {
+    circ(p.x, p.y, 13, 'rgba(56,189,248,.22)');
+    if (mv) SP.dibuja('soldado', p.x, p.y, 27, 45, ang, izq); else SP.dibuja('agachado', p.x, p.y, 38, 34, ang, izq);
+  } else {
+    ctx.strokeStyle = WP[w].c; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + Math.cos(ang) * 22, p.y + Math.sin(ang) * 22); ctx.stroke();
+    circ(p.x, p.y, 12, '#38bdf8'); circ(p.x, p.y, 6, '#e0f2fe');
+  }
   text('❤'.repeat(hp), 10, 18, 16, '#f87171', 'left');
   text('Arma: ' + WP[w].n, W - 10, 18, 16, WP[w].c, 'right');
   const nx = WP.find(g => !unlocked(WP.indexOf(g)));

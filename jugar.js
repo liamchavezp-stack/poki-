@@ -41,10 +41,16 @@
       var s1 = document.createElement('script');
       s1.src = 'juegos/common.js';
       s1.onload = function () {
-        var s2 = document.createElement('script');
-        s2.src = 'juegos/' + j.id + '.js';
-        s2.onload = function () { ajustar(); };
-        document.body.appendChild(s2);
+        // sprites.js va antes del juego; si no carga, el juego usa su dibujo de respaldo
+        var s0 = document.createElement('script');
+        s0.src = 'juegos/sprites.js';
+        s0.onload = s0.onerror = function () {
+          var s2 = document.createElement('script');
+          s2.src = 'juegos/' + j.id + '.js';
+          s2.onload = function () { ajustar(); };
+          document.body.appendChild(s2);
+        };
+        document.body.appendChild(s0);
       };
       document.body.appendChild(s1);
       window.addEventListener('resize', ajustar);
