@@ -1,0 +1,174 @@
+/* Noche en la Pizzería — style.css
+   Tema oscuro de pizzería de noche. Todo el estilo del juego vive aquí.
+   Sin imágenes externas: los personajes son emoji + CSS. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0a0a12;
+  color: #f0e6d2;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+}
+
+h1 { font-size: 1.4rem; text-align: center; margin: 6px 0 2px; color: #ffb347; letter-spacing: 1px; }
+.sub { text-align: center; color: #aaa; font-size: .85rem; margin-bottom: 10px; }
+.small { font-size: .8rem; color: #888; text-align: center; margin-top: 12px; max-width: 860px; line-height: 1.5; }
+.center-text { text-align: center; }
+.mt-10 { margin-top: 10px; }
+.big-btn { font-size: 1.2rem; padding: 12px 24px; }
+
+/* ---------- HUD ---------- */
+#hud {
+  width: 100%; max-width: 900px;
+  display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  background: #1a1a26; border: 2px solid #444; border-radius: 10px;
+  padding: 10px 14px; margin-bottom: 8px;
+}
+#hud div { font-size: .95rem; }
+#hud b { color: #ffb347; }
+#hud .danger-text { color: #ff5555; }
+
+.bar-label { width: 100%; max-width: 900px; font-size: .8rem; color: #aaa; margin: 6px 0 2px; display: flex; justify-content: space-between; }
+.bar-wrap { width: 100%; max-width: 900px; background: #222; border-radius: 6px; height: 14px; overflow: hidden; margin-bottom: 4px; border: 1px solid #444; }
+.bar-wrap.tall { height: 16px; }
+.bar-fill { height: 100%; width: 100%; transition: width .3s; }
+#powerBar { background: linear-gradient(90deg, #37d67a, #a8e063); }
+#powerBar.low { background: linear-gradient(90deg, #ff512f, #dd2476); }
+#musicBar { background: linear-gradient(90deg, #c084fc, #7c3aed); }
+#musicBar.low { background: linear-gradient(90deg, #ff512f, #dd2476); }
+#flashBar { background: linear-gradient(90deg, #fde047, #facc15); }
+#flashBar.low { background: linear-gradient(90deg, #ff512f, #dd2476); }
+
+#powerWarning {
+  width: 100%; max-width: 900px; text-align: center; min-height: 20px;
+  color: #ff5555; font-weight: bold; font-size: .9rem;
+  animation: blink .6s infinite alternate;
+}
+#powerWarning:empty { animation: none; }
+
+/* ---------- Oficina y puertas ---------- */
+#game { width: 100%; max-width: 900px; background: #11111c; border: 3px solid #555; border-radius: 12px; overflow: hidden; position: relative; }
+#game.flicker { animation: flicker 0.4s 3; }
+@keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+#office { display: grid; grid-template-columns: 1fr 2fr 1fr; min-height: 280px; }
+.doorSide {
+  background: #1e1e2e; border-right: 2px solid #333; padding: 10px;
+  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+}
+.doorSide.right { border-right: none; border-left: 2px solid #333; }
+.doorVisual {
+  font-size: 4rem; min-height: 110px; display: flex; align-items: center; justify-content: center;
+  background: #0d0d18; border: 2px solid #333; border-radius: 8px; margin: 8px 0;
+  transition: background .2s;
+}
+.doorVisual.closed { background: #3a3a4a; border-color: #ffb347; }
+.doorVisual.danger { border-color: #ff2222; animation: blink .5s infinite alternate; }
+.doorVisual.flash-on { box-shadow: 0 0 22px #fde047; border-color: #fde047; }
+@keyframes blink { from { box-shadow: 0 0 4px #ff2222; } to { box-shadow: 0 0 18px #ff2222; } }
+.door-warning { min-height: 20px; font-size: .85rem; color: #ff8888; }
+
+#centerOffice {
+  background: radial-gradient(circle at 50% 30%, #2a2a3d, #14141f);
+  padding: 14px; text-align: center;
+}
+#centerOffice .big { font-size: 3.2rem; }
+#officeMsg { margin-top: 10px; font-size: .95rem; min-height: 44px; color: #ffd98a; }
+#roster { margin-top: 10px; font-size: .9rem; line-height: 1.6; }
+
+/* ---------- Botones ---------- */
+button {
+  cursor: pointer; border: none; border-radius: 8px; padding: 10px 12px;
+  font-size: 1rem; font-weight: bold; background: #2d6a4f; color: white; margin: 4px 0;
+}
+button:hover { filter: brightness(1.15); }
+button:disabled { opacity: .45; cursor: not-allowed; filter: none; }
+button.doorBtn { background: #555; width: 100%; }
+button.doorBtn.closed { background: #b45309; }
+button.lightBtn { background: #444; width: 100%; }
+button.lightBtn.on { background: #facc15; color: #111; }
+button.camBtn { background: #1d4ed8; }
+button.camBtn.active { background: #7c3aed; }
+button.warn { background: #b91c1c; }
+button.gold { background: #b45309; }
+button.purple { background: #7c3aed; }
+button.flashBtn { background: #854d0e; width: 100%; }
+button.flashBtn.on { background: #facc15; color: #111; box-shadow: 0 0 14px #fde047; }
+button.musicBtn { background: #6d28d9; width: 100%; }
+
+#controls { width: 100%; max-width: 900px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+#controls button { margin: 0; }
+
+/* ---------- Cámaras ---------- */
+#camPanel {
+  width: 100%; max-width: 900px; background: #0d0d18; border: 2px solid #444;
+  border-radius: 10px; padding: 12px; margin-top: 10px; display: none;
+}
+#camPanel.open { display: block; }
+#camButtons { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+#camButtons button { font-size: .85rem; padding: 8px 10px; margin: 0; }
+#camView {
+  background: #000; border: 2px solid #555; border-radius: 8px;
+  min-height: 190px; padding: 14px; text-align: center; position: relative; overflow: hidden;
+}
+#camView::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 2px, transparent 2px 4px);
+  pointer-events: none;
+}
+#camView.static::before {
+  content: "SIN SEÑAL"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #666; font-size: 1.4rem; letter-spacing: 4px; background: #050505;
+}
+#camView .camTitle { color: #7dd3fc; font-weight: bold; margin-bottom: 8px; }
+#camView .camChars { font-size: 3rem; line-height: 1.4; }
+#camView .camNote { color: #aaa; font-size: .9rem; margin-top: 8px; }
+#camView .cam-static { color: #666; font-size: .85rem; }
+.cam-tip { margin-top: 8px; color: #aaa; font-size: .9rem; }
+
+/* ---------- Menú de noches ---------- */
+.night-grid { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 12px 0; }
+.night-btn { min-width: 92px; padding: 14px 10px; }
+.night-btn .night-num { display: block; font-size: 1.3rem; }
+.night-btn .night-diff { display: block; font-size: .75rem; font-weight: normal; margin-top: 4px; }
+.night-btn.locked { background: #333; color: #888; }
+.stats-line { color: #aaa; font-size: .9rem; line-height: 1.7; }
+
+/* ---------- Overlays ---------- */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.92);
+  display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px;
+}
+.overlay.hidden { display: none; }
+.card { background: #1a1a26; border: 2px solid #ffb347; border-radius: 14px; padding: 24px; max-width: 600px; width: 100%; text-align: center; max-height: 92vh; overflow-y: auto; }
+.card h2 { color: #ffb347; margin-bottom: 12px; font-size: 1.6rem; }
+.card h3 { color: #7dd3fc; margin: 14px 0 6px; }
+.card p { margin-bottom: 10px; line-height: 1.5; }
+.card ul { text-align: left; margin: 10px auto 14px; max-width: 480px; line-height: 1.6; }
+.card .keys { font-size: .85rem; color: #aaa; }
+
+/* ---------- Jumpscare ---------- */
+#jumpscare {
+  position: fixed; inset: 0; background: #000; display: none;
+  align-items: center; justify-content: center; flex-direction: column; z-index: 100; text-align: center;
+  animation: shake .1s infinite;
+}
+#jumpscare.show { display: flex; }
+#jumpscare .face { font-size: 9rem; }
+#jumpscare h2 { color: #ff2222; font-size: 2.2rem; margin-top: 10px; }
+#jumpscare p { color: #fff; }
+@keyframes shake { 0% { transform: translate(0,0); } 25% { transform: translate(6px,-6px); } 50% { transform: translate(-6px,6px); } 75% { transform: translate(6px,6px); } 100% { transform: translate(0,0); } }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  #office { grid-template-columns: 1fr 1.4fr 1fr; min-height: 240px; }
+  .doorVisual { font-size: 2.6rem; min-height: 84px; }
+  #centerOffice .big { font-size: 2.2rem; }
+  #hud div { font-size: .85rem; }
+  #jumpscare .face { font-size: 6rem; }
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noche en la Pizzería — Juego inspirado en FNAF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>🌙 Noche en la Pizzería 🍕</h1>
+<p class="sub">Un juego original inspirado en Five Nights at Freddy's — sobrevive de las 12 AM a las 6 AM, noches 1 a 5</p>
+
+<div id="hud">
+  <div id="hudNight">Noche <b>1</b></div>
+  <div>Hora: <b id="clock">12 AM</b></div>
+  <div>Energía: <b id="powerText">100%</b></div>
+  <div>Uso: <b id="usageText">Bajo</b></div>
+  <div>Puntos: <b id="scoreText">0 pts</b></div>
+</div>
+
+<div class="bar-label"><span>🔋 Energía</span><span>Puertas, cámaras, luces y linterna gastan energía</span></div>
+<div class="bar-wrap tall"><div class="bar-fill" id="powerBar"></div></div>
+<div id="powerWarning"></div>
+
+<div class="bar-label"><span>🎵 Caja de música</span><span>Si llega a 0, Sombra se enfada</span></div>
+<div class="bar-wrap"><div class="bar-fill" id="musicBar"></div></div>
+
+<div class="bar-label"><span>🔦 Batería de linterna</span><span>Se recarga sola cuando está apagada</span></div>
+<div class="bar-wrap"><div class="bar-fill" id="flashBar"></div></div>
+
+<div id="game">
+  <div id="office">
+    <div class="doorSide">
+      <div><b>Puerta izquierda</b></div>
+      <div class="doorVisual" id="leftDoorVisual">🚪</div>
+      <div class="door-warning" id="leftWarning"></div>
+      <button class="doorBtn" id="leftDoorBtn">Cerrar puerta izq.</button>
+      <button class="lightBtn" id="leftLightBtn">💡 Luz izq.</button>
+    </div>
+    <div id="centerOffice">
+      <div class="big">🏢</div>
+      <p><b>Oficina de seguridad</b></p>
+      <p>Estás de guardia en la pizzería.<br>Los animatrónicos se mueven de noche.</p>
+      <div id="officeMsg">Todo tranquilo... por ahora.</div>
+      <button class="flashBtn" id="flashBtn">🔦 Linterna: apagada</button>
+      <button class="musicBtn" id="musicBtn">🎵 Dar cuerda (100%)</button>
+      <p id="roster">Animatrónicos: 🐻 Oso Bruno &nbsp; 🐰 Conejo Lalo<br>🐔 Gallina Pía &nbsp; 🦊 Zorro Rojo &nbsp; 👤 Sombra (noches 3-5)</p>
+    </div>
+    <div class="doorSide right">
+      <div><b>Puerta derecha</b></div>
+      <div class="doorVisual" id="rightDoorVisual">🚪</div>
+      <div class="door-warning" id="rightWarning"></div>
+      <button class="doorBtn" id="rightDoorBtn">Cerrar puerta der.</button>
+      <button class="lightBtn" id="rightLightBtn">💡 Luz der.</button>
+    </div>
+  </div>
+</div>
+
+<div id="controls">
+  <button class="camBtn" id="camToggleBtn">📷 Abrir cámaras</button>
+  <button id="soundBtn">🔊 Sonido: sí</button>
+  <button id="pauseBtn">⏸ Pausa</button>
+  <button class="warn" id="restartBtn">↻ Reiniciar noche</button>
+  <button id="menuBtn">🏠 Menú</button>
+</div>
+
+<div id="camPanel">
+  <div id="camButtons"></div>
+  <div id="camView">
+    <div class="camTitle" id="camTitle">CAM 1 — Escenario</div>
+    <div class="camChars" id="camChars">🐻 🐰 🐔 🦊</div>
+    <div class="camNote" id="camNote">Todos están en el escenario. Vigila cómo se mueven.</div>
+  </div>
+  <p class="cam-tip">Tip: si los ves en un pasillo, prepárate. Si llegan a tu puerta y está abierta, te atrapan. Si cierras la puerta a tiempo, se alejan. La linterna los frena un poco, y la caja de música hay que mantenerla con cuerda.</p>
+</div>
+
+<div id="menuOverlay" class="overlay">
+  <div class="card">
+    <h2>🌙 Noche en la Pizzería</h2>
+    <p>Eres el guardia nocturno. Sobrevive de las <b>12 AM a las 6 AM</b> en cada noche. Cada noche es más difícil.</p>
+    <div class="night-grid" id="nightButtons"></div>
+    <p class="stats-line"><span id="highScoreText">🏆 Récord de puntos: 0 pts</span><br><span id="bestNightText">🌙 Mejor noche superada: ninguna todavía</span><br><span id="winsText">🎉 Noches ganadas en total: 0</span></p>
+    <button id="instructionsBtn" class="purple">📖 Cómo jugar</button>
+    <p class="center-text mt-10">Tu progreso se guarda en este navegador.</p>
+  </div>
+</div>
+
+<div id="instructionsOverlay" class="overlay hidden">
+  <div class="card">
+    <h2>📖 Cómo jugar</h2>
+    <ul>
+      <li>📷 <b>Cámaras (6):</b> Escenario, Comedor, Pasillo izq., Pasillo der., Cocina y Almacén. Ver a un animatrónico en cámara lo frena.</li>
+      <li>🚪 <b>Puertas:</b> ciérralas cuando un animatrónico esté en tu puerta. Si está abierta, te atrapa. Sombra tarda más en irse.</li>
+      <li>💡 <b>Luces:</b> enciende la luz de la puerta para ver si hay alguien ahí.</li>
+      <li>🔦 <b>Linterna:</b> gasta su propia batería, se recarga apagada. Frena a los animatrónicos en cámara y en la puerta.</li>
+      <li>🎵 <b>Caja de música:</b> se va parando sola. Dale cuerda con el botón. Si llega a 0 en las noches 3-5, sale Sombra del Almacén.</li>
+      <li>🔋 <b>Energía:</b> puertas, cámaras, luces y linterna gastan energía. Avisos al 20% y al 10%. Si llega a 0%, todo se apaga.</li>
+      <li>🏆 <b>Puntos:</b> ganas puntos por cada segundo y cada hora, más un bonus al ganar por la energía y la caja que te quedaron.</li>
+    </ul>
+    <h3>Animatrónicos</h3>
+    <ul>
+      <li>🐻 <b>Oso Bruno:</b> lento y constante, lado izquierdo.</li>
+      <li>🐰 <b>Conejo Lalo:</b> rápido, pero a veces retrocede, lado izquierdo.</li>
+      <li>🐔 <b>Gallina Pía:</b> pasa mucho por la Cocina, lado derecho.</li>
+      <li>🦊 <b>Zorro Rojo:</b> lento... y de repente corre, lado derecho.</li>
+      <li>👤 <b>Sombra:</b> solo noches 3-5, sale del Almacén si se para la caja.</li>
+    </ul>
+    <p class="keys">Teclado: A / D puertas, Q / E luces, C cámaras, F linterna, M caja de música, 1-6 cámaras, P pausa.</p>
+    <button id="closeInstructionsBtn">Cerrar</button>
+  </div>
+</div>
+
+<div id="startOverlay" class="overlay hidden">
+  <div class="card">
+    <h2 id="startTitle">🌙 Noche 1</h2>
+    <p id="startText"></p>
+    <button id="startBtn" class="big-btn">▶ Empezar</button>
+  </div>
+</div>
+
+<div id="pauseOverlay" class="overlay hidden">
+  <div class="card">
+    <h2>⏸ Pausa</h2>
+    <p>El juego está en pausa. Respira, guardia.</p>
+    <button id="resumeBtn" class="big-btn">▶ Seguir jugando</button>
+    <button id="quitToMenuBtn">🏠 Salir al menú</button>
+  </div>
+</div>
+
+<div id="endOverlay" class="overlay hidden">
+  <div class="card">
+    <h2 id="endTitle">¡Sobreviviste!</h2>
+    <p id="endText"></p>
+    <p id="endScore"></p>
+    <button id="playAgainBtn" class="big-btn">↻ Jugar otra vez</button>
+    <button id="backMenuBtn">🏠 Menú de noches</button>
+  </div>
+</div>
+
+<div id="jumpscare">
+  <div class="face" id="jumpFace">🐻</div>
+  <h2>¡TE ATRAPARON!</h2>
+  <p><span id="jumpName">El animatrónico</span> llegó a tu oficina.</p>
+</div>
+
+<p class="small">Juego original hecho por fans, inspirado en la idea de Five Nights at Freddy's. No usa imágenes, audio ni personajes oficiales del juego original. Los personajes aquí son originales, dibujados con emoji y CSS. Abre este archivo index.html en tu navegador para jugar. También puedes activar GitHub Pages en este repositorio.</p>
+
+<script src="script.js"></script>
+</body>
+</html>

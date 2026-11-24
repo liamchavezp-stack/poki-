@@ -1,0 +1,123 @@
+/* LiamPlay - estilos de la portada y de la página de jugar (licencia MIT) */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh; color: #0f2a4a;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(180deg, #bfe6ff 0%, #8fd0ff 45%, #6ab8f7 100%) fixed;
+}
+a { color: inherit; }
+.pagina { max-width: 1500px; margin: 0 auto; padding: 16px; }
+
+/* ---------- cuadrícula de mosaicos ---------- */
+:root { --t: 94px; --g: 12px; }
+.cuadricula {
+  display: grid; gap: var(--g); grid-auto-flow: dense; justify-content: center;
+  grid-template-columns: repeat(auto-fill, var(--t));
+  grid-auto-rows: var(--t);
+}
+.logo-tarjeta { grid-column: span 2; }
+.mosaico, .logo-tarjeta { border-radius: 16px; box-shadow: 0 6px 12px rgba(9, 30, 66, .25); }
+.mosaico {
+  position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  text-decoration: none; color: #fff;
+  transition: transform .15s ease, box-shadow .15s ease; container-type: inline-size;
+}
+.mosaico.t2 { grid-column: span 2; grid-row: span 2; }
+.mosaico.t3 { grid-column: span 3; grid-row: span 3; }
+.mosaico .emoji { font-size: 46px; line-height: 1; filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .35)); transition: transform .15s ease; }
+.mosaico.t2 .emoji { font-size: 100px; }
+.mosaico.t3 .emoji { font-size: 160px; }
+@supports (font-size: 1cqw) { .mosaico .emoji, .mosaico.t2 .emoji, .mosaico.t3 .emoji { font-size: 50cqw; } }
+.mosaico .nombre {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 6px 8px; text-align: center;
+  font-weight: 800; font-size: 13px; line-height: 1.15;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .75));
+  opacity: 0; transform: translateY(8px); transition: opacity .15s ease, transform .15s ease;
+}
+.mosaico.t2 .nombre, .mosaico.t3 .nombre { font-size: 16px; padding-bottom: 12px; }
+.mosaico:hover, .mosaico:focus-visible { transform: scale(1.05) translateY(-2px); box-shadow: 0 12px 22px rgba(9, 30, 66, .4); z-index: 2; outline: none; }
+.mosaico:hover .nombre, .mosaico:focus-visible .nombre { opacity: 1; transform: none; }
+.mosaico:hover .emoji { transform: scale(1.1) rotate(-4deg); }
+@media (hover: none) { .mosaico .nombre { opacity: 1; transform: none; } }
+
+/* ---------- tarjeta del logo ---------- */
+.logo-tarjeta {
+  background: #fff; padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0;
+}
+.logo { font-size: 24px; font-weight: 900; letter-spacing: -.5px; text-decoration: none; color: #0b63ce; white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.logo b { color: #ff7a1a; }
+.logo-icono { font-size: 24px; }
+.buscador { display: flex; align-items: center; gap: 6px; background: #eaf4ff; border-radius: 999px; padding: 5px 10px; font-size: 13px; }
+.buscador input { border: 0; background: transparent; outline: none; width: 100%; min-width: 0; font: inherit; color: inherit; }
+.buscador:focus-within { box-shadow: 0 0 0 2px #0b63ce; }
+.vacio { background: #fff; border-radius: 16px; padding: 16px; margin: 12px 0 0; font-weight: 700; }
+
+/* ---------- categorías ---------- */
+.categorias { display: flex; gap: 10px; margin: 18px 0; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; }
+.categorias button {
+  flex: none; border: 0; cursor: pointer; background: #fff; color: #0f2a4a; font: inherit; font-weight: 800;
+  padding: 12px 18px; border-radius: 14px; box-shadow: 0 4px 8px rgba(9, 30, 66, .2);
+}
+.categorias button:hover { transform: translateY(-2px); }
+.categorias button.activa { background: #0b63ce; color: #fff; }
+
+/* ---------- texto de abajo ---------- */
+.acerca { background: #fff; border-radius: 16px; padding: 20px 24px; box-shadow: 0 6px 12px rgba(9, 30, 66, .2); line-height: 1.55; }
+.acerca h1 { margin: 0 0 8px; font-size: 24px; }
+.acerca h2 { margin: 18px 0 6px; font-size: 18px; color: #0b63ce; }
+.acerca p { margin: 0 0 8px; }
+.pie { text-align: center; padding: 20px 8px 8px; font-size: 13px; font-weight: 700; color: #0b3a75; }
+
+/* ---------- página de jugar ---------- */
+.barra { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: #fff; border-radius: 16px; padding: 10px 16px; box-shadow: 0 6px 12px rgba(9, 30, 66, .2); margin-bottom: 14px; }
+.barra h1 { font-size: 18px; margin: 0; flex: 1; min-width: 120px; }
+.boton {
+  border: 0; cursor: pointer; font: inherit; font-weight: 800; background: #0b63ce; color: #fff; padding: 10px 16px; border-radius: 12px;
+  text-decoration: none; display: inline-block;
+}
+.boton:hover { background: #094fa5; }
+.marco { background: #0f172a; border-radius: 16px; padding: 12px; box-shadow: 0 8px 18px rgba(9, 30, 66, .35); color: #e2e8f0; text-align: center; }
+.marco:fullscreen { border-radius: 0; display: flex; flex-direction: column; justify-content: center; overflow: auto; }
+.marcador { display: flex; justify-content: center; gap: 24px; font-weight: 800; font-size: 16px; margin-bottom: 8px; }
+.marcador b { color: #fde047; }
+.lienzo { position: relative; display: inline-block; max-width: 100%; line-height: 0; }
+#c { display: block; max-width: 100%; border-radius: 10px; background: #000; touch-action: none; user-select: none; -webkit-user-select: none; }
+#fin {
+  position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  background: rgba(2, 6, 23, .85); border-radius: 10px; line-height: 1.3; padding: 12px;
+}
+#fin.on { display: flex; }
+#fin h2 { margin: 0; font-size: 26px; color: #fff; }
+#fin p { margin: 0; font-size: 16px; }
+#ayuda { margin: 10px auto 0; max-width: 620px; font-size: 14px; line-height: 1.4; color: #cbd5e1; }
+#pad { display: none; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+#pad button {
+  min-width: 64px; height: 64px; padding: 0 14px; border: 0; border-radius: 16px; background: #334155; color: #fff; font-size: 24px; font-weight: 800;
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+#pad button:active { background: #0b63ce; }
+@media (hover: none), (pointer: coarse) { #pad.on { display: flex; } }
+.marco iframe { width: 100%; height: 78vh; min-height: 480px; border: 0; border-radius: 10px; background: #000; display: block; }
+.marco:fullscreen iframe { height: 100vh; border-radius: 0; }
+.aviso { padding: 40px 16px; line-height: 1.5; }
+.aviso .emoji { font-size: 64px; display: block; }
+.descripcion { background: #fff; border-radius: 16px; padding: 14px 18px; margin: 14px 0; box-shadow: 0 6px 12px rgba(9, 30, 66, .2); }
+.descripcion p { margin: 0; }
+.titulo-mas { margin: 18px 0 10px; font-size: 20px; }
+
+@media (max-width: 520px) {
+  :root { --g: 8px; --t: calc((100vw - 20px - 3 * var(--g)) / 4); }
+  .pagina { padding: 10px; }
+  .cuadricula { grid-template-columns: repeat(4, var(--t)); }
+  .mosaico.t3 { grid-column: span 2; grid-row: span 2; }
+  .logo-tarjeta { grid-column: span 4; flex-direction: row; align-items: center; }
+  .logo-tarjeta .buscador { flex: 1; }
+  .logo { font-size: 20px; }
+  .logo-icono { font-size: 20px; }
+  .mosaico .nombre { font-size: 10px; padding: 12px 3px 5px; }
+  .mosaico.t2 .nombre, .mosaico.t3 .nombre { font-size: 13px; }
+  .marco { padding: 8px; }
+  .acerca { padding: 16px; }
+  .barra h1 { flex-basis: 100%; order: 3; }
+}
