@@ -13,7 +13,7 @@ loop(dt => {
     const h = { x: sn[0].x + d.x, y: sn[0].y + d.y };
     if (h.x < 0 || h.y < 0 || h.x >= N || h.y >= N || sn.some(s => s.x == h.x && s.y == h.y)) return over('¡Chocaste!');
     sn.unshift(h);
-    if (h.x == f.x && h.y == f.y) { score(++sc); f = food(); } else sn.pop();
+    if (h.x == f.x && h.y == f.y) { score(++sc); beep('punto'); chispas(h.x * S + 10, h.y * S + 10, '#ef4444', 8); f = food(); } else sn.pop();
   }
   rect(0, 0, W, H, '#0f172a');
   for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) if ((i + j) % 2) rect(i * S, j * S, S, S, '#111c33');

@@ -1,12 +1,13 @@
 // Pégale al Topo
 setSize(360, 420); help('Tienes 30 segundos. Toca los topos cuando salgan (o usa las teclas 1 a 9, como en el teclado de un teléfono).');
+const SP = window.SPRITES; // sprites de LIAM: topo, topo golpeado, hoyo y mazo
 let time = 30, sc = 0, go = false, holes = [], t = 0;
 for (let i = 0; i < 9; i++) holes.push({ up: 0, hit: 0 });
 function whack(i) {
   if (i < 0 || i > 8) return;
   go = true;
   const h = holes[i];
-  if (h.up > 0 && h.hit <= 0) { h.hit = 0.3; h.up = 0.3; score(++sc); }
+  if (h.up > 0 && h.hit <= 0) { h.hit = 0.3; h.up = 0.3; score(++sc); beep('golpe'); chispas((i % 3) * 120 + 60, Math.floor(i / 3) * 120 + 120, '#fde047', 8); }
 }
 tap((x, y) => { if (y < 60) { go = true; return; } whack(Math.floor((y - 60) / 120) * 3 + Math.floor(x / 120)); });
 onKey(k => { if (k >= '1' && k <= '9' && k.length == 1) whack(+k - 1); else if (k == 'go') go = true; });
@@ -25,6 +26,15 @@ loop(dt => {
   text('Tiempo: ' + Math.max(0, Math.ceil(time)) + ' s', W / 2, 30, 24);
   holes.forEach((h, i) => {
     const cx = (i % 3) * 120 + 60, cy = Math.floor(i / 3) * 120 + 130;
+    if (SP && SP.listo('hoyo') && SP.listo('topo') && SP.listo('topo_golpe')) {
+      // con sprites: hoyo vacío, o el topo (que ya trae su hoyo) cuando sale
+      if (h.up > 0) {
+        SP.dibuja(h.hit > 0 ? 'topo_golpe' : 'topo', cx, cy + 8, 100, 62);
+        if (h.hit > 0) { SP.dibuja('mazo', cx + 30, cy - 30, 46, 45, -0.5 - h.hit * 3); text('¡Pum!', cx - 22, cy - 44, 18, '#fff'); }
+      } else SP.dibuja('hoyo', cx, cy + 22, 96, 37);
+      text(i + 1, cx - 46, cy - 40, 12, 'rgba(255,255,255,.5)');
+      return;
+    }
     ctx.fillStyle = '#422006'; ctx.beginPath(); ctx.ellipse(cx, cy + 22, 44, 18, 0, 0, 7); ctx.fill();
     if (h.up > 0) {
       const c = h.hit > 0 ? '#f87171' : '#a16207';

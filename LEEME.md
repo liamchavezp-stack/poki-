@@ -8,7 +8,7 @@ Portal de juegos gratis para jugar al instante en el navegador, en computadora, 
 | --- | --- |
 | Clásicos | Serpiente, Bloques, Rompe Ladrillos, Ping Pong, Gato |
 | Ingenio | 2048, Memorama, Buscaminas, Conecta 4 |
-| Acción | Invasores, Asteroides, Carrera de 3 Carriles |
+| Acción | Armas vs Robots, Invasores, Asteroides, Carrera de 3 Carriles |
 | Habilidad | Pajarito Volador, Dino Corredor, Pégale al Topo, Simón Dice |
 | De LIAM | Noche en la Pizzería, Flappy Bird de LIAM (se abre en otra pestaña) |
 
@@ -47,6 +47,7 @@ En el repositorio de GitHub entra a **Settings → Pages**, elige **Deploy from 
    - `tap((x, y) => { ... })`, `move((x, y) => { ... })` y `swipe()` sirven para el dedo o el mouse.
    - `loop(dt => { ... })` se repite en cada cuadro; `dt` son los segundos que pasaron.
    - `over('mensaje')` termina la partida.
+   - `beep('punto')`, `chispas(x, y, color)` y `temblor(0.3)` agregan sonido, partículas y temblor de pantalla.
 2. Agrega una línea en la lista `JUEGOS` de `juegos.js` con el mismo `id` que el nombre del archivo:
 
 ```js
@@ -54,6 +55,13 @@ En el repositorio de GitHub entra a **Settings → Pages**, elige **Deploy from 
 ```
 
 `tam` puede ser 1 (normal), 2 (destacado 2x2) o 3 (destacado 3x3). Para un juego que es una página aparte usa `tipo: 'pagina'` con `url`, y para uno que vive en otro sitio usa `tipo: 'enlace'` con `url`.
+
+## Sprites, sonido y efectos
+
+- **Sprites:** los dibujos de los juegos salen de las dos hojas de sprites de LIAM. Están guardados como imágenes PNG en base64 dentro de `juegos/sprites.js`, para que el sitio siga siendo solo archivos de texto. Se usan con `SPRITES.dibuja('nombre', x, y, ancho, alto, giro, voltea, espejo)` o con `SPRITES.cabe('nombre', x, y, anchoMax, altoMax)`. Si una imagen no carga, cada juego usa su dibujo de figuras de respaldo.
+- **Sonido retro:** `beep('punto')`, `beep('golpe')`, `beep('disparo')`, `beep('explota')`, `beep('salto')`, `beep('clic')`, `beep('dano')`, `beep('gana')` y `beep('fin')` suenan con WebAudio, sin archivos de audio. El botón **🔊 Sonido** de la página de jugar lo apaga o lo prende, y se recuerda en el dispositivo.
+- **Efectos:** `chispas(x, y, color, cantidad)` suelta partículas y `temblor(segundos, fuerza)` sacude la pantalla un momento.
+- **Sin librerías externas:** todo el código es propio (licencia MIT); no se usa ningún CDN ni código de terceros.
 
 ## Archivos
 

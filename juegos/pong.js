@@ -12,10 +12,10 @@ loop(dt => {
   const tg = by - 40; cy += Math.max(-250 * dt, Math.min(250 * dt, tg - cy)); cy = Math.max(0, Math.min(H - 80, cy));
   bx += vx * dt; by += vy * dt;
   if (by < 8) { by = 8; vy = Math.abs(vy); } if (by > H - 8) { by = H - 8; vy = -Math.abs(vy); }
-  if (vx < 0 && bx < 34 && bx > 14 && by > py - 8 && by < py + 88) { vx = Math.abs(vx) * 1.06; vy = (by - (py + 40)) * 7; }
-  if (vx > 0 && bx > W - 34 && bx < W - 14 && by > cy - 8 && by < cy + 88) { vx = -Math.abs(vx) * 1.06; vy = (by - (cy + 40)) * 7; }
-  if (bx < -20) { cpu++; if (cpu >= 5) return over('Ganó la compu'); serve(1); }
-  if (bx > W + 20) { me++; score(me); serve(-1); }
+  if (vx < 0 && bx < 34 && bx > 14 && by > py - 8 && by < py + 88) { vx = Math.abs(vx) * 1.06; vy = (by - (py + 40)) * 7; beep('golpe'); }
+  if (vx > 0 && bx > W - 34 && bx < W - 14 && by > cy - 8 && by < cy + 88) { vx = -Math.abs(vx) * 1.06; vy = (by - (cy + 40)) * 7; beep('golpe'); }
+  if (bx < -20) { cpu++; beep('dano'); temblor(0.25, 8); if (cpu >= 5) return over('Ganó la compu'); serve(1); }
+  if (bx > W + 20) { me++; score(me); beep('punto'); serve(-1); }
   rect(0, 0, W, H, '#0f172a');
   for (let y = 0; y < H; y += 24) rect(W / 2 - 2, y, 4, 12, '#334155');
   if (SP && SP.listo('p1') && SP.listo('p2')) {

@@ -2,7 +2,7 @@
 setSize(400, 560); help('Toca, haz clic o pulsa Espacio para aletear. Pasa entre los tubos.');
 const SP = window.SPRITES, FR = ['pajaro1', 'pajaro2', 'pajaro3', 'pajaro2']; // cuadros de aleteo de la hoja de LIAM
 let y = 250, v = 0, pipes = [], t = 1.2, sc = 0, go = false, an = 0;
-function flap() { go = true; v = -330; }
+function flap() { go = true; v = -330; beep('salto'); }
 tap(flap); onKey(k => { if (k == 'go' || k == 'up') flap(); });
 loop(dt => {
   an += dt;
@@ -12,7 +12,7 @@ loop(dt => {
     pipes.forEach(p => { p.x -= 170 * dt; });
     pipes = pipes.filter(p => p.x > -70);
     for (const p of pipes) {
-      if (!p.ok && p.x + 60 < 90) { p.ok = true; score(++sc); }
+      if (!p.ok && p.x + 60 < 90) { p.ok = true; score(++sc); beep('punto'); }
       if (90 + 14 > p.x && 90 - 14 < p.x + 60 && (y - 14 < p.g || y + 14 > p.g + 140)) return over('¡Pum!');
     }
     if (y > H - 54 || y < -20) return over('¡Pum!');

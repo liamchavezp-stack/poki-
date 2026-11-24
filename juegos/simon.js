@@ -3,14 +3,15 @@ setSize(360, 360); help('Mira la secuencia de colores y repítela tocando los co
 pad(['left', 'up', 'down', 'right']);
 const DIR = ['up', 'right', 'down', 'left'], OFF = ['#166534', '#991b1b', '#1e40af', '#a16207'], ON = ['#4ade80', '#f87171', '#60a5fa', '#fde047'], FQ = [330, 262, 392, 494];
 let seq = [], i = 0, phase = 'wait', t = 0, lit = -1, litT = 0, sc = 0, ac = null;
-function beep(n) {
+function tono(n) {
   try {
+    if (window.MUDO) return; // respeta el botón de silencio
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
     const o = ac.createOscillator(), g = ac.createGain();
     o.frequency.value = FQ[n]; g.gain.value = 0.08; o.connect(g); g.connect(ac.destination); o.start(); o.stop(ac.currentTime + 0.22);
   } catch (e) {}
 }
-function flash(n) { lit = n; litT = 0.3; beep(n); }
+function flash(n) { lit = n; litT = 0.3; tono(n); }
 function round() { seq.push(rnd(4)); i = 0; phase = 'show'; t = 0.7; }
 function press(n) {
   if (phase == 'wait') return round();

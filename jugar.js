@@ -37,6 +37,7 @@
     document.getElementById('desc').textContent = j.desc;
     if (j.tipo === 'canvas') {
       zc.hidden = false;
+      document.getElementById('sonido').hidden = false; // el botón de sonido solo sirve en los juegos de canvas
       window.GID = j.id;
       var s1 = document.createElement('script');
       s1.src = 'juegos/common.js';
